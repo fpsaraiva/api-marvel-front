@@ -10,7 +10,7 @@ class App {
 
   async getCharacters() {
     try {
-      const charactersDataFromBackend = await apiServer.get(`/showCharacters/${this.offset}`);
+      const charactersDataFromBackend = await apiServer.get(`/characters?offset=${this.offset}`);
 
       this.populatePageWithCharacters(charactersDataFromBackend.data.characters);
       this.paginateResults(charactersDataFromBackend.data.total);
@@ -31,7 +31,7 @@ class App {
       characterElement.innerHTML = `
               <img src="${this.populateCharactersImage(item.thumbnail.path, item.thumbnail.extension)}" alt="${item.name}">
               <div class="character-info">
-                  <h3>${item.id} - ${item.name}</h3>
+                  <h3>${item.name}</h3>
               </div>
               <div class="overview">
                   <h4>Descrição</h4>
@@ -98,7 +98,7 @@ class App {
 
   async getSpecificCharacterByID(name) {
     try {
-      const searchedDataFromBackend = await apiServer.get(`/searchByName/${name}`);
+      const searchedDataFromBackend = await apiServer.get(`/charactersName?nameStartsWith=${name}`);
       
       this.populatePageWithCharacters(searchedDataFromBackend.data);
       search.value = '';
